@@ -6,7 +6,9 @@ const path = require("path");
 
 const app = express();
 const dev = app.get("env") !== "production";
-const PORT = process.env.PORT || 5000;
+
+const normalisePort = port => parseInt(port, 10);
+const PORT = normalisePort(process.env.PORT || 5000);
 
 if (!dev) {
     app.disable("x-powered-by");
@@ -26,7 +28,7 @@ if (dev) {
 
 const server = createServer(app);
 
-server.listen(PORT, err => {
+server.listen(PORT, "0.0.0.0", err => {
     if (err) throw err;
     console.log("server started")
 })
