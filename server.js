@@ -12,17 +12,7 @@ const PORT = normalisePort(process.env.PORT || 5000);
 
 
 // Socket.io
-const http = Server(app);
-const io = require('socket.io')(http);
-io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.on('disconnect', function(){
-    console.log('User Disconnected');
-  });
-  socket.on('send_scoreboard_update', function(update){
-    socket.broadcast.emit('scoreboard_update', update);
-  });
-});
+
 
 if (!dev) {
     app.disable("x-powered-by");
@@ -41,6 +31,21 @@ if (dev) {
 }
 
 const server = createServer(app);
+
+const io = socket.listen(server)
+
+io.on('connection', function(socket){
+    console.log('a user connected');
+    socket.on('disconnect', function(){
+    console.log('User Disconnected');
+    });
+    socket.on('send_scoreboard_update', function(update){
+        socket.broadcast.emit('scoreboard_update', update);
+    });
+});
+
+io.set('origins', '*:*')
+io.set('match origin protocol', true)
 
 server.listen(PORT, "0.0.0.0", err => {
     if (err) throw err;
