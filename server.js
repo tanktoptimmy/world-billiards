@@ -6,7 +6,7 @@ const path = require("path");
 
 const app = express();
 const server = createServer(app);
-const io = require('socket.io')(server);
+const io = require("socket.io")(server);
 
 const dev = app.get("env") !== "production";
 
@@ -30,18 +30,19 @@ if (dev) {
 }
 
 // Socket.io
-io.on('connection', function(socket){
-    console.log('a user connected');
-    socket.on('disconnect', function(){
-    console.log('User Disconnected');
+io.on("connection", function(socket){
+    console.log("a user connected");
+    socket.on("disconnect", function(){
+    console.log("User Disconnected");
     });
-    socket.on('send_scoreboard_update', function(update){
-        socket.broadcast.emit('scoreboard_update', update);
+    socket.on("send_scoreboard_update", function(update){
+        console.log("update:",update)
+        socket.broadcast.emit("scoreboard_update", update);
     });
 });
 
-// io.set('origins', '*:*')
-// io.set('match origin protocol', true)
+// io.set("origins", "*:*")
+// io.set("match origin protocol", true)
 
 server.listen(PORT, "0.0.0.0", err => {
     if (err) throw err;
