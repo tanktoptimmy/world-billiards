@@ -5,14 +5,12 @@ const morgan = require("morgan");
 const path = require("path");
 
 const app = express();
+const socket = require('socket.io');
+
 const dev = app.get("env") !== "production";
 
 const normalisePort = port => parseInt(port, 10);
 const PORT = normalisePort(process.env.PORT || 5000);
-
-
-// Socket.io
-
 
 if (!dev) {
     app.disable("x-powered-by");
@@ -31,7 +29,7 @@ if (dev) {
 }
 
 const server = createServer(app);
-
+// Socket.io
 const io = socket.listen(server)
 
 io.on('connection', function(socket){
