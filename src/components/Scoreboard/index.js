@@ -3,7 +3,7 @@ import io from "socket.io-client";
 
 import Scoreboard from "./Scoreboard";
 
-const socket = io.connect('http://localhost:8000');
+const socket = io();
 class App extends Component {
   constructor(props) {
     super(props);
