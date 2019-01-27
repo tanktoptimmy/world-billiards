@@ -6,9 +6,7 @@ const path = require("path");
 
 const app = express();
 const dev = app.get("env") !== "production";
-
-const normalisePort = port => parseInt(port, 10);
-const PORT = normalisePort(process.env.port || 5000);
+const PORT = process.env.port || 5000;
 
 if (!dev) {
     app.disable("x-powered-by");
