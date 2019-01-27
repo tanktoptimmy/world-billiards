@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import openSocket from 'socket.io-client';
+import io from 'socket.io-client';
 import { map } from "ramda";
 
-const socket = openSocket('http://localhost:8000');
+const socket = io();
 
 class Dashboard extends Component {
   constructor(props) {
