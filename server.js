@@ -5,7 +5,8 @@ const morgan = require("morgan");
 const path = require("path");
 
 const app = express();
-const socket = require('socket.io');
+const server = createServer(app);
+const io = require('socket.io')(server);
 
 const dev = app.get("env") !== "production";
 
@@ -28,10 +29,7 @@ if (dev) {
     app.use(morgan("dev"));
 }
 
-const server = createServer(app);
 // Socket.io
-const io = socket.listen(server)
-
 io.on('connection', function(socket){
     console.log('a user connected');
     socket.on('disconnect', function(){
@@ -42,8 +40,8 @@ io.on('connection', function(socket){
     });
 });
 
-io.set('origins', '*:*')
-io.set('match origin protocol', true)
+// io.set('origins', '*:*')
+// io.set('match origin protocol', true)
 
 server.listen(PORT, "0.0.0.0", err => {
     if (err) throw err;
